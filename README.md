@@ -17,6 +17,7 @@
 
 ### Built With
 * [Laravel](https://laravel.com/)
+* [Inertia.js](https://inertiajs.com/)
 * [Vue.js](https://vuejs.org/)
 * [Mailgun API](mailgun.com)
 * [npm](https://www.npmjs.com/)
