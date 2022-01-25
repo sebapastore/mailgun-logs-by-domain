@@ -7,17 +7,22 @@
 ### Instalation
 * Clone this repository
 * composer install
+* get an API Key at https://mailgun.com
+* create a new .env file (use .env.example), configure a database and insert the API Key
 * php artisan migrate
+
+### Development 
 * npm install
 * npm run production or npm run watch-poll
-* get an API Key at https://mailgun.com
 
 ### Built With
 * [Laravel](https://laravel.com/)
+* [Inertia.js](https://inertiajs.com/)
 * [Vue.js](https://vuejs.org/)
-* [MySQL](https://www.mysql.com/)
 * [Mailgun API](mailgun.com)
 * [npm](https://www.npmjs.com/)
+
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
