@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -70,4 +71,15 @@ class User extends Authenticatable
         self::ROLE_ADMIN,
         self::ROLE_CUSTOMER,
     ];
+
+    public static function getRolesForSelect()
+    {
+        return Helper::arrayToSelectableCollection(self::$roles);
+    }
+
+    public static function getRolesForSelectWithAllOption()
+    {
+        return collect([['id' => '', 'name' => 'Todos']])
+            ->merge(self::getRolesForSelect());
+    }
 }
