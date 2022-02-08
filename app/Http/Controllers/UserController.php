@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -47,7 +48,7 @@ class UserController extends Controller
         $attributes = validator(request()->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'role' => 'required',
+            'role' => [ 'required', Rule::in(User::$roles)],
             'password' => 'required|min:8|confirmed',
         ])->validate();
 
@@ -72,7 +73,7 @@ class UserController extends Controller
     {
         $attributes = validator(request()->all(), [
             'name' => 'required',
-            'role' => 'required',
+            'role' => [ 'required', Rule::in(User::$roles)],
             'email' => 'required|email',
         ])->validate();
 
