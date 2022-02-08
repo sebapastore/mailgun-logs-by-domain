@@ -30,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -60,5 +61,13 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+    ];
+
+    /**
+     * Available roles for user.
+     */
+    public static array $roles = [
+        self::ROLE_ADMIN,
+        self::ROLE_CUSTOMER,
     ];
 }
