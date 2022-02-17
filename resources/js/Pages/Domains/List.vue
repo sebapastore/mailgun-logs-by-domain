@@ -1,9 +1,16 @@
 <template>
     <app-layout title="Domains">
         <template #header>
-            <h2>
-                Domains
-            </h2>
+            <div class="lg:flex lg:items-center lg:justify-between">
+                <h2>
+                    Domains
+                </h2>
+                <div class="mt-5 flex lg:mt-0 lg:ml-4">
+                    <my-button-link :href="route('domains.create')">
+                        Crear Dominio
+                    </my-button-link>
+                </div>
+            </div>
         </template>
 
         <div class="py-12">
@@ -18,10 +25,12 @@
 </template>
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue'
+    import MyButtonLink from '@/CustomComponents/ButtonLink.vue'
     export default {
         props: ['domains'],
         components: {
             AppLayout,
+            MyButtonLink,
         },
     }
 </script>

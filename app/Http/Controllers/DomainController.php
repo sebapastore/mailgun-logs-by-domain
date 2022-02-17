@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Domain;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class DomainController extends Controller
@@ -13,5 +12,20 @@ class DomainController extends Controller
         return Inertia::render('Domains/List', [
             'domains' => $domains,
         ]);
+    }
+
+    public function create(){
+        return Inertia::render('Domains/CreateForm');
+    }
+
+    public function store()
+    {
+        $attributes = validator(request()->all(), [
+            'name' => 'required',
+        ])->validate();
+
+        Domain::create($attributes);
+
+        return redirect()->route('domains.index');
     }
 }
