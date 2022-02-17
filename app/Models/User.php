@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,6 +19,9 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    const ROLE_ADMIN = 'Admin';
+    const ROLE_CUSTOMER = 'Customer';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -58,4 +63,23 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Available roles for user.
+     */
+    public static array $roles = [
+        self::ROLE_ADMIN,
+        self::ROLE_CUSTOMER,
+    ];
+
+    public static function getRolesForSelect()
+    {
+        return Helper::arrayToSelectableCollection(self::$roles);
+    }
+
+    public static function getRolesForSelectWithAllOption()
+    {
+        return collect([['id' => '', 'name' => 'Todos']])
+            ->merge(self::getRolesForSelect());
+    }
 }
