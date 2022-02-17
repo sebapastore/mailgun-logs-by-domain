@@ -10,7 +10,7 @@ class DomainController extends Controller
 {
     public function index(){
         $domains = Domain::all();
-        return Inertia::render('Domains/Index', [
+        return Inertia::render('Domains/List', [
             'domains' => $domains,
         ]);
     }
