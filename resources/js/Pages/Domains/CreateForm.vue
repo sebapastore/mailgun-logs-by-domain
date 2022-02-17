@@ -2,7 +2,7 @@
     <app-layout title="Crear Usuario">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Crear Usuario
+                Crear Dominio
             </h2>
         </template>
 
