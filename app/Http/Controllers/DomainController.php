@@ -28,4 +28,22 @@ class DomainController extends Controller
 
         return redirect()->route('domains.index');
     }
+
+    public function edit(Domain $domain)
+    {
+        return Inertia::render('Domains/UpdateForm', [
+            'domain' => $domain,
+        ]);
+    }
+
+    public function update(Domain $domain)
+    {
+        $attributes = validator(request()->all(), [
+            'name' => 'required',
+        ])->validate();
+
+        $domain->update($attributes);
+
+        return redirect()->route('domains.index');
+    }
 }
