@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\DomainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
  * Admin Routes
  * todo: middleware for admin and customer
  * - Users
- * -
+ * - Domains
  * */
 
 // Users
@@ -37,3 +38,6 @@ Route::resource('users', \App\Http\Controllers\UserController::class)
 
 Route::put('users/{user}/update_password', [\App\Http\Controllers\UserController::class, 'updatePassword'])
     ->middleware(['auth:sanctum', 'verified'])->name('users.update-password');
+
+Route::get('/domains', [DomainController::class, 'index'])
+    ->middleware(['auth:sanctum', 'verified'])->name('domains.index');

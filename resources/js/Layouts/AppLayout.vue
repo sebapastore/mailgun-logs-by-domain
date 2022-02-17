@@ -25,6 +25,9 @@
                                 <jet-nav-link :href="route('users.index')" :active="route().current('users.index')">
                                     Usuarios
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('domains.index')" :active="route().current('domains.index')">
+                                    Dominios
+                                </jet-nav-link>
                             </div>
                         </div>
 
