@@ -39,5 +39,14 @@ Route::resource('users', \App\Http\Controllers\UserController::class)
 Route::put('users/{user}/update_password', [\App\Http\Controllers\UserController::class, 'updatePassword'])
     ->middleware(['auth:sanctum', 'verified'])->name('users.update-password');
 
+Route::get('user-domains/{user}', [\App\Http\Controllers\UserDomainController::class, 'index'])
+    ->middleware(['auth:sanctum', 'verified'])->name('user-domain.index');
+
+Route::post('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'store'])
+    ->middleware(['auth:sanctum', 'verified'])->name('user-domain.store');
+
+Route::delete('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'destroy'])
+    ->middleware(['auth:sanctum', 'verified'])->name('user-domain.destroy');
+
 Route::get('/domains', [DomainController::class, 'index'])
     ->middleware(['auth:sanctum', 'verified'])->name('domains.index');
