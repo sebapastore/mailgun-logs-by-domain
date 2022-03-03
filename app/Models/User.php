@@ -72,6 +72,11 @@ class User extends Authenticatable
         self::ROLE_CUSTOMER,
     ];
 
+    public function domains()
+    {
+        return $this->belongsToMany(Domain::class);
+    }
+
     public static function getRolesForSelect()
     {
         return Helper::arrayToSelectableCollection(self::$roles);
