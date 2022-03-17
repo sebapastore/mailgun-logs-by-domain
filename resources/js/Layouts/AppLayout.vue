@@ -22,12 +22,15 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('users.index')" :active="route().current('users.index')">
-                                    Usuarios
-                                </jet-nav-link>
-                                <jet-nav-link :href="route('domains.index')" :active="route().current('domains.index')">
-                                    Dominios
-                                </jet-nav-link>
+
+                                <template v-if="$page.props.user.role === roleAdmin()">
+                                    <jet-nav-link :href="route('users.index')" :active="route().current('users.index')">
+                                        Usuarios
+                                    </jet-nav-link>
+                                    <jet-nav-link :href="route('domains.index')" :active="route().current('domains.index')">
+                                        Dominios
+                                    </jet-nav-link>
+                                </template>
                             </div>
                         </div>
 
@@ -151,9 +154,18 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('users.index')" :active="route().current('users.index')">
-                            Usuarios
-                        </jet-responsive-nav-link>
+
+                        <!--Admin-->
+                        <template v-if="$page.props.user.role === roleAdmin()">
+                            <jet-responsive-nav-link :href="route('users.index')" :active="route().current('users.index')">
+                                Usuarios
+                            </jet-responsive-nav-link>
+                            <jet-responsive-nav-link :href="route('domains.index')" :active="route().current('domains.index')">
+                                Dominios
+                            </jet-responsive-nav-link>
+                        </template>
+                        <!--End Admin-->
+
                     </div>
 
                     <!-- Responsive Settings Options -->

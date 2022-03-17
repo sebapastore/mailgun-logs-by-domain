@@ -31,24 +31,29 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
  * - Domains
  * */
 
-// Users
+Route::middleware('admin')->group(function() {
 
-Route::resource('users', \App\Http\Controllers\UserController::class)
-    ->middleware(['auth:sanctum', 'verified']);
+    // Users
 
-Route::put('users/{user}/update_password', [\App\Http\Controllers\UserController::class, 'updatePassword'])
-    ->middleware(['auth:sanctum', 'verified'])->name('users.update-password');
+    Route::resource('users', \App\Http\Controllers\UserController::class)
+        ->middleware(['auth:sanctum', 'verified']);
 
-// Domains
+    Route::put('users/{user}/update_password', [\App\Http\Controllers\UserController::class, 'updatePassword'])
+        ->middleware(['auth:sanctum', 'verified'])->name('users.update-password');
 
-Route::resource('domains', \App\Http\Controllers\DomainController::class)
-    ->middleware(['auth:sanctum', 'verified']);
+    // Domains
 
-Route::get('user-domains/{user}', [\App\Http\Controllers\UserDomainController::class, 'index'])
-    ->middleware(['auth:sanctum', 'verified'])->name('user-domain.index');
+    Route::resource('domains', \App\Http\Controllers\DomainController::class)
+        ->middleware(['auth:sanctum', 'verified']);
 
-Route::post('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'store'])
-    ->middleware(['auth:sanctum', 'verified'])->name('user-domain.store');
+    Route::get('user-domains/{user}', [\App\Http\Controllers\UserDomainController::class, 'index'])
+        ->middleware(['auth:sanctum', 'verified'])->name('user-domain.index');
 
-Route::delete('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'destroy'])
-    ->middleware(['auth:sanctum', 'verified'])->name('user-domain.destroy');
+    Route::post('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'store'])
+        ->middleware(['auth:sanctum', 'verified'])->name('user-domain.store');
+
+    Route::delete('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'destroy'])
+        ->middleware(['auth:sanctum', 'verified'])->name('user-domain.destroy');
+
+});
+
