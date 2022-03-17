@@ -89,7 +89,7 @@
                                                 <div class="text-sm text-gray-900">{{ user.role}}</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <Link :href="route('user-domain.index', {user: user.id})" class="font-bold text-indigo-600 hover:text-indigo-900">Gestionar Dominios</Link>
+                                                <Link v-if="user.role === 'Customer'" :href="route('user-domain.index', {user: user.id})" class="font-bold text-indigo-600 hover:text-indigo-900">Gestionar Dominios</Link>
                                                 <Link :href="route('users.edit', {user: user.id})" class="ml-4 text-indigo-600 hover:text-indigo-900">Editar</Link>
                                             </td>
                                         </tr>
