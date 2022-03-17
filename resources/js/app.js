@@ -12,7 +12,11 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
-            .mixin({ methods: { route } })
+            .mixin({ methods: {
+                route,
+                roleAdmin: function() {return 'Admin'},
+                roleCustomer: function() {return 'Customer'},
+            } })
             .mount(el);
     },
 });
