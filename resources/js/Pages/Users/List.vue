@@ -26,13 +26,13 @@
                     <div class="mb-6 grid grid-cols-12 gap-x-4 gap-y-2">
 
                         <!-- search -->
-                        <div class="md:col-span-3 sm:col-span-6">
+                        <div class="md:col-span-3 col-span-6">
                             <jet-label value="Buscar" />
                             <jet-input type="text" class="mt-1 block w-full" v-model="search"/>
                         </div>
 
                         <!-- role -->
-                        <div class="md:col-span-3 sm:col-span-6">
+                        <div class="md:col-span-3 col-span-6">
                             <my-list-box
                                 id="role"
                                 v-model="role"
