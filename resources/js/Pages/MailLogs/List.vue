@@ -15,11 +15,12 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-                <!--Filtros-->
+                <!--Filters-->
                 <div>
                     <div class="mb-2 text-gray-900">
                         Filtros
                     </div>
+
                     <div class="mb-6 grid grid-cols-12 gap-x-4 gap-y-2">
 
                         <!-- domain_id -->
@@ -37,13 +38,44 @@
                             </my-list-box>
                         </div>
 
-                        <!-- search -->
-                        <div class="md:col-span-3 col-span-6">
-                            <jet-label value="Buscar" />
-                            <jet-input type="text" class="mt-1 block w-full" v-model="search"/>
+                        <!-- date_from -->
+                        <div class="md:col-span-2 col-span-6">
+                            <jet-label value="Fecha Desde" />
+                            <my-date-picker v-model="date_from" :value="date_from"/>
+                        </div>
+
+                        <!-- date_to -->
+                        <div class="md:col-span-2 col-span-6">
+                            <jet-label value="Fecha Hasta" />
+                            <my-date-picker  v-model="date_to" :value="date_to"/>
                         </div>
 
                     </div>
+
+                    <div class="mb-6 grid grid-cols-12 gap-x-4 gap-y-2">
+
+                        <!-- event -->
+                        <div class="md:col-span-3 col-span-6">
+                            <my-list-box
+                                id="event"
+                                v-model="event"
+                                @input="val => event = val"
+                                :options="events"
+                                @selected="event"
+                            >
+                                <template #header>
+                                    <jet-label for="type" value="Evento" />
+                                </template>
+                            </my-list-box>
+                        </div>
+
+                        <!-- search -->
+                        <div class="md:col-span-3 col-span-6">
+                            <jet-label value="Buscar por Correo o Asunto" />
+                            <jet-input type="text" class="mt-1 block w-full" v-model="search"/>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="flex flex-col">
@@ -118,13 +150,14 @@ import MyListBox from "@/CustomComponents/ListBox";
 import JetInput from "@/Jetstream/Input";
 import JetLabel from "@/Jetstream/Label";
 import {Inertia} from "@inertiajs/inertia";
-
+import MyDatePicker from "@/CustomComponents/DatePicker";
 
 export default {
     props: {
         logs: Object,
         filters: Object,
         domains: Array,
+        events: Array,
     },
 
     components: {
@@ -136,6 +169,7 @@ export default {
         JetLabel,
         JetInput,
         MyListBox,
+        MyDatePicker,
     },
 
     data() {
@@ -146,6 +180,9 @@ export default {
                 name: '',
             }),
             domain_id: this.filters.domain_id,
+            date_from: this.filters.date_from,
+            date_to: this.filters.date_to,
+            event: this.filters.event,
             search: this.filters.search,
         }
     },
@@ -155,7 +192,10 @@ export default {
             Inertia.get(
                 route('mail-logs.index'), {
                     domain_id: this.domain_id,
-                    search: this.search
+                    date_from: this.date_from,
+                    date_to: this.date_to,
+                    event: this.event,
+                    search: this.search,
                 },
                 {
                     preserveState: true,
@@ -166,8 +206,11 @@ export default {
     },
 
     watch: {
-        search: function() { this.filter() },
         domain_id: function() { this.filter() },
+        date_from: function() { this.filter() },
+        date_to: function() { this.filter() },
+        event: function() { this.filter() },
+        search: function() { this.filter() },
     },
 }
 </script>

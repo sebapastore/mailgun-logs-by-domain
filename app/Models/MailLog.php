@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class MailLog extends Model
 {
@@ -26,4 +27,18 @@ class MailLog extends Model
         self::EVENT_TEMPORARY_FAIL,
         self::EVENT_PERMANENT_FAIL,
     ];
+
+    public static function getEventsForSelect(): Collection
+    {
+        return collect([
+            ['id' => null, 'name' => 'Todos'],
+            ['id' => self::EVENT_ACCEPTED, 'name' => self::EVENT_ACCEPTED],
+            ['id' => self::EVENT_DELIVERED, 'name' => self::EVENT_DELIVERED],
+            ['id' => self::EVENT_OPENED, 'name' => self::EVENT_OPENED],
+            ['id' => self::EVENT_REJECTED, 'name' => self::EVENT_REJECTED],
+            ['id' => self::EVENT_COMPLAINED, 'name' => self::EVENT_COMPLAINED],
+            ['id' => self::EVENT_TEMPORARY_FAIL, 'name' => self::EVENT_TEMPORARY_FAIL],
+            ['id' => self::EVENT_PERMANENT_FAIL, 'name' => self::EVENT_PERMANENT_FAIL],
+        ]);
+    }
 }
