@@ -20,7 +20,7 @@ class CustomerAuth
     {
         $user = Auth::user();
 
-        if($user->role != User::ROLE_CUSTOMER || $user->role != User::ROLE_ADMIN) {
+        if($user->role != User::ROLE_CUSTOMER && $user->role != User::ROLE_ADMIN) {
             abort(403, 'Unauthorized action.');
         }
 
