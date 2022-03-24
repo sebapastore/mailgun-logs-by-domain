@@ -107,7 +107,9 @@ export default {
         document.addEventListener('keydown', closeOnEscape)
     },
     mounted() {
-        var option = this.options.find(option => option.id === this.$attrs.modelValue)
+        const option = this.options.find(
+            option => option.id.toString() === this.$attrs.modelValue.toString()
+        )
 
         if (option)
             this.select(option)
