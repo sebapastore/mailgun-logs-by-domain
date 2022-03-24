@@ -23,6 +23,7 @@
                                     Dashboard
                                 </jet-nav-link>
 
+                                <!--Admin-->
                                 <template v-if="$page.props.user.role === roleAdmin()">
                                     <jet-nav-link :href="route('users.index')" :active="route().current('users.index')">
                                         Usuarios
@@ -31,6 +32,16 @@
                                         Dominios
                                     </jet-nav-link>
                                 </template>
+                                <!--End Admin-->
+
+                                <!--Customer-->
+                                <template v-if="$page.props.user.role === roleAdmin() || $page.props.user.role === roleCustomer() ">
+                                    <jet-nav-link :href="route('mail-logs.index')" :active="route().current('mail-logs.index')">
+                                        Registros
+                                    </jet-nav-link>
+                                </template>
+                                <!--End Customer-->
+
                             </div>
                         </div>
 
@@ -165,6 +176,14 @@
                             </jet-responsive-nav-link>
                         </template>
                         <!--End Admin-->
+
+                        <!--Customer-->
+                        <template v-if="$page.props.user.role === roleAdmin() || $page.props.user.role === roleCustomer() ">
+                            <jet-responsive-nav-link :href="route('mail-logs.index')" :active="route().current('mail-logs.index')">
+                                Registros
+                            </jet-responsive-nav-link>
+                        </template>
+                        <!--End Customer-->
 
                     </div>
 
