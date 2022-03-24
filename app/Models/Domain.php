@@ -18,9 +18,14 @@ class Domain extends Model
         'name',
     ];
 
-  public function users()
+    public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function mailLogs()
+    {
+        return $this->hasMany(MailLog::class);
     }
 
 }
