@@ -43,7 +43,7 @@ class FetchMailLogsByDomain implements ShouldQueue
         $body = array(
             'begin' => $before,
             'end' => $now,
-            'limit' => '50',
+            'limit' => '300',//max limit from mailgun
             'pretty' => 'yes',
             'ascending' => 'yes'
         );
