@@ -4,14 +4,13 @@ namespace App\Jobs;
 
 use App\Models\MailLog;
 use App\Models\Domain;
+use App\Services\FetchMailsFromAPIService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
 
 class FetchMailLogsByDomain implements ShouldQueue
 {
@@ -35,27 +34,9 @@ class FetchMailLogsByDomain implements ShouldQueue
     public function handle()
     {
         #1- Get Logs from API
-        $client = new Client(['base_uri' => 'https://api.mailgun.net/','timeout'  => 10.0]);
-        $method = 'GET';
-        $uri = 'v3/'.$this->domain->name.'/events';
-        $now= Carbon::now()->toRfc2822String();//todo:verify timezone - date example:Thu, 17 March 2022 19:00:00 -0000'
-        $before  = Carbon::now()->subMinutes(360)->toRfc2822String();//todo:verify timezone - date example:Thu, 17 March 2022 19:00:00 -0000'
-        $body = array(
-            'begin' => $before,
-            'end' => $now,
-            'limit' => '300',//max limit from mailgun
-            'pretty' => 'yes',
-            'ascending' => 'yes'
-        );
-        $response = $client->request(
-                $method,
-                $uri,
-                [
-                    'auth' => ['api',env('MAILGUN_API_KEY')],
-                    'query' => $body,
-                ]);
-        $jsonResponse = json_decode($response->getBody()->getContents());
-        if ($response->getStatusCode() == "200") {
+        $fetchMailsFromAPIService = new FetchMailsFromAPIService($this->domain);
+        $jsonResponse = $fetchMailsFromAPIService->get();
+        if (isset($jsonResponse)) {
             #2- Save Logs on DB
             $items = $jsonResponse->items;
             foreach ($items as $item) {
