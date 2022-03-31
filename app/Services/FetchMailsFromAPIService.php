@@ -34,7 +34,7 @@ class FetchMailsFromAPIService
                 $method,
                 $uri,
                 [
-                    'auth' => ['api',env('MAILGUN_API_KEY')],
+                    'auth' => ['api', config("api.mailgun_api_key")],
                     'query' => $body,
                 ]);
         if ($response->getStatusCode() == "200") {
