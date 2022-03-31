@@ -96,7 +96,7 @@ class User extends Authenticatable
         }
 
         if($this->role === self::ROLE_CUSTOMER) {
-            $this->domains->contains(fn($domain, $key) => $domain->id === $domainId);
+            return $this->domains->contains(fn($domain, $key) => strval($domain->id) === $domainId);
         }
 
         return false;
