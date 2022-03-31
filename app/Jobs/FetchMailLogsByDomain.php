@@ -36,26 +36,30 @@ class FetchMailLogsByDomain implements ShouldQueue
         #1- Get Logs from API
         $fetchMailsFromAPIService = new FetchMailsFromAPIService($this->domain);
         $jsonResponse = $fetchMailsFromAPIService->get();
-        if (isset($jsonResponse)) {
-            #2- Save Logs on DB
-            $items = $jsonResponse->items;
-            foreach ($items as $item) {
-                $headers = $item->message->headers;
-                #Check if Log already exists on DB
-                $mailLogExist = MailLog::where('mailgun_id',$item->id)->first();
-                if ($mailLogExist == null) {
-                    MailLog::create([
-                        'domain_id' => $this->domain->id,
-                        'mailgun_id' => $item->id,
-                        'event' => $item->event,
-                        'message_to' => $item->recipient,
-                        'message_from' => $headers->from,
-                        'subject' => $headers->subject,
-                        'timestamp' => gmdate("Y-m-d H:i:s", $item->timestamp),
-                        'data' => json_encode("{}")//todo,
-                    ]);
-                }
-            }
-        }        
+        #2- Save Logs on DB
+        if (isset($jsonResponse)) $this->saveLogs($jsonResponse->items);
+    }
+
+    private function saveLogs($items)
+    {
+        foreach ($items as $item) {
+            $mailLogExist = MailLog::where('mailgun_id',$item->id)->first();
+            if ($mailLogExist == null) $this->saveLog($item);
+        }
+    }
+
+    private function saveLog($item)
+    {
+        $headers = $item->message->headers;
+        MailLog::create([
+            'domain_id' => $this->domain->id,
+            'mailgun_id' => $item->id,
+            'event' => $item->event,
+            'message_to' => $item->recipient,
+            'message_from' => $headers->from,
+            'subject' => $headers->subject,
+            'timestamp' => gmdate("Y-m-d H:i:s", $item->timestamp),
+            'data' => json_encode("{}")//todo,
+        ]);
     }
 }
