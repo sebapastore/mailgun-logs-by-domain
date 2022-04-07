@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Helpers\Helper;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -72,19 +73,49 @@ class User extends Authenticatable
         self::ROLE_CUSTOMER,
     ];
 
-    public function domains()
+    public function domains(): BelongsToMany
     {
         return $this->belongsToMany(Domain::class);
     }
 
-    public static function getRolesForSelect()
+    public static function getRolesForSelect(): Collection
     {
         return Helper::arrayToSelectableCollection(self::$roles);
     }
 
-    public static function getRolesForSelectWithAllOption()
+    public static function getRolesForSelectWithAllOption(): Collection
     {
         return collect([['id' => '', 'name' => 'Todos']])
             ->merge(self::getRolesForSelect());
+    }
+
+    public function canAccessDomainData($domainId): bool
+    {
+        if($this->role === self::ROLE_ADMIN) {
+            return true;
+        }
+
+        if($this->role === self::ROLE_CUSTOMER) {
+            $this->domains->contains(fn($domain, $key) => $domain->id === $domainId);
+        }
+
+        return false;
+    }
+
+    public function getDomainsForSelect(): Collection
+    {
+        if($this->role === self::ROLE_ADMIN) {
+            return Domain::get()->map(
+                fn($domain) => ['id' => $domain->id, 'name' => $domain->name]
+            );
+        }
+
+        if($this->role === self::ROLE_CUSTOMER) {
+            return $this->domains->map(
+                fn($domain) => ['id' => $domain->id, 'name' => $domain->name]
+            );
+        }
+
+        return collect();
     }
 }

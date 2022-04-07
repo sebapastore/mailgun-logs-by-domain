@@ -31,12 +31,12 @@ class DomainTest extends TestCase
         $this->login();
 
         $data = [
-            'name' => 'domainname.com',
+            'name' => 'domain-name.com',
         ];
 
         $this->post(route('domains.store'), $data);
 
-        $this->assertTrue(Domain::where('name', 'domainname.com')->exists());
+        $this->assertTrue(Domain::where('name', 'domain-name.com')->exists());
     }
 
     /** @test */
@@ -44,9 +44,7 @@ class DomainTest extends TestCase
     {
         $this->login();
 
-        $domain = Domain::create([
-            'name' => 'domainname.com',
-        ]);
+        $domain = Domain::factory()->create();
 
         $this->get(route('domains.edit', ['domain' => $domain->id]))->assertSuccessful();
     }
@@ -56,19 +54,19 @@ class DomainTest extends TestCase
     {
         $this->login();
 
-        $domain = Domain::create([
-            'name' => 'domainname.com',
+        $domain = Domain::factory()->create([
+            'name' => 'domain-name.com',
         ]);
 
         $data = [
-            'name' => 'domainname.com.py',
+            'name' => 'domain-name.com.py',
         ];
 
         $this->put(route('domains.update', $domain->id), $data);
 
         $domain->refresh();
 
-        $this->assertTrue($domain->name === 'domainname.com.py');
+        $this->assertTrue($domain->name === 'domain-name.com.py');
     }
 
 }

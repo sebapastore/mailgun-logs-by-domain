@@ -26,9 +26,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 /*
  * Admin Routes
- * todo: middleware for admin and customer
  * - Users
  * - Domains
+ * - User Domain
  * */
 
 Route::middleware('admin')->group(function() {
@@ -46,6 +46,8 @@ Route::middleware('admin')->group(function() {
     Route::resource('domains', \App\Http\Controllers\DomainController::class)
         ->middleware(['auth:sanctum', 'verified']);
 
+    // User Domains
+
     Route::get('user-domains/{user}', [\App\Http\Controllers\UserDomainController::class, 'index'])
         ->middleware(['auth:sanctum', 'verified'])->name('user-domain.index');
 
@@ -56,4 +58,21 @@ Route::middleware('admin')->group(function() {
         ->middleware(['auth:sanctum', 'verified'])->name('user-domain.destroy');
 
 });
+
+
+/*
+ * Customers Routes
+ * - Mail Logs
+ * */
+
+Route::middleware('customer')->group(function() {
+
+    // Mail Logs
+
+    Route::get('mail-logs', [\App\Http\Controllers\MailLogController::class, 'index'])
+        ->middleware(['auth:sanctum', 'verified'])->name('mail-logs.index');
+
+});
+
+
 
