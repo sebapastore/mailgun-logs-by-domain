@@ -49,6 +49,20 @@ class UserFactory extends Factory
     }
 
     /**
+     * The user has Customer Role.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function customer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => User::ROLE_CUSTOMER,
+            ];
+        });
+    }
+
+    /**
      * Indicate that the user should have a personal team.
      *
      * @return $this
