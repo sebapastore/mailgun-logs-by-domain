@@ -69,5 +69,7 @@
             MyButtonLink,
             Link,
         },
+        methods:{
+        }
     }
 </script>

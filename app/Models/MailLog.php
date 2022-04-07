@@ -10,6 +10,23 @@ class MailLog extends Model
 {
     use HasFactory;
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'domain_id',
+        'mailgun_id',
+        'event',
+        'message_to',
+        'message_from',
+        'subject',
+        'timestamp',
+        'data'
+    ];
+
     const EVENT_ACCEPTED = 'Accepted';
     const EVENT_DELIVERED = 'Delivered';
     const EVENT_OPENED = 'Opened';
@@ -41,4 +58,5 @@ class MailLog extends Model
             ['id' => self::EVENT_PERMANENT_FAIL, 'name' => self::EVENT_PERMANENT_FAIL],
         ]);
     }
+
 }
