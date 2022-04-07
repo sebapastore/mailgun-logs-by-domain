@@ -55,7 +55,5 @@ Route::middleware('admin')->group(function() {
     Route::delete('user/{user}/domain/{domain}', [\App\Http\Controllers\UserDomainController::class, 'destroy'])
         ->middleware(['auth:sanctum', 'verified'])->name('user-domain.destroy');
 
-    Route::get('maillog', [\App\Http\Controllers\MailLogController::class, 'index'])
-        ->middleware(['auth:sanctum', 'verified'])->name('mail-log.index');
 });
 

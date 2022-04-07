@@ -39,9 +39,6 @@
                                                     Editar
                                                 </Link>
                                             </td>
-                                            <td>
-                                                <button v-on:click="show_logs(domain.id)">Ver logs</button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap" colspan="5" v-if="domains.length === 0">
@@ -73,18 +70,6 @@
             Link,
         },
         methods:{
-            show_logs(domain_id){
-                let url = route('mail-log.index');
-                axios.get(url,{
-                    headers:{ "Content-Type":"application/JSON" },
-                    params :{ 'domain_id':domain_id }
-                })
-                .then((response) => {
-                    console.log(response.items)
-                }).catch(()=>{
-                    alert("Ocurrió un error");
-                })
-            },
         }
     }
 </script>
